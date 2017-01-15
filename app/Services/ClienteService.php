@@ -10,23 +10,44 @@ namespace CodeProject\Services;
 
 
 use CodeProject\Repositories\ClienteRepository;
-use Illuminate\Http\Request;
+
+
+use CodeProject\Validators\ClienteValidator;
+
+use Prettus\Validator\Exceptions\ValidatorException;
+
 
 class ClienteService
 {
     protected $repository;
+    /**
+     * @var ClienteValidadtor
+     */
+    protected $validadtor;
 
-    public function __construct(ClienteRepository $repository)
+    public function __construct(ClienteRepository $repository, ClienteValidator $validator)
     {
         $this->repository = $repository;
+        $this->validadtor = $validator;
     }
 
     public function all(){
         return $this->repository->all();
     }
 
-    public function store(array $data){
-        return $this->repository->create($data);
+    public function create(array $data){
+
+        try{
+            $this->validadtor->with($data)->passesOrFail();
+            return $this->repository->create($data);
+        }catch (ValidatorException $e){
+            return [
+                'error' => true,
+                'mensagem' => $e->getMessageBag()
+            ];
+        }
+
+
     }
 
     public function show($id)
@@ -36,8 +57,19 @@ class ClienteService
 
     public function update(array $request, $id)
     {
-        $this->repository->update($request,$id);
-        return $this->repository->find($id);
+        try{
+
+            $this->validadtor->with($request)->passesOrFail();
+            return $this->repository->update($request,$id);
+
+        }catch (ValidatorException $e){
+            return [
+                'error' => true,
+                'mensagem' => $e->getMessageBag()
+            ];
+        }
+
+
     }
 
     public function destroy($id)

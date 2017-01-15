@@ -34,9 +34,9 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        return $this->clienteService->store($request->all());
+        return $this->clienteService->create($request->all());
     }
 
     /**
