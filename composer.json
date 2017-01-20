@@ -4,12 +4,14 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "minimum-stability":"dev",
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "barryvdh/laravel-ide-helper": "^2.2",
         "prettus/l5-repository": "^2.6",
-        "prettus/laravel-validation": "1.1.4"
+        "prettus/laravel-validation": "1.1.4",
+        "lucadegasperi/oauth2-server-laravel": "5.0.*@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

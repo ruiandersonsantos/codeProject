@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-15.
+    * Generated on 2017-01-19.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -43,6 +43,8 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'CodeProject\Repositories\ClienteRepository' instanceof \CodeProject\Repositories\ClienteRepositoryEloquent,
+            'CodeProject\Repositories\ProjetoRepository' instanceof \CodeProject\Repositories\ProjetoRepositoryEloquent,
+            'CodeProject\Repositories\TarefaRepository' instanceof \CodeProject\Repositories\TarefaRepositoryEloquent,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -157,6 +159,8 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'CodeProject\Repositories\ClienteRepository' instanceof \CodeProject\Repositories\ClienteRepositoryEloquent,
+            'CodeProject\Repositories\ProjetoRepository' instanceof \CodeProject\Repositories\ProjetoRepositoryEloquent,
+            'CodeProject\Repositories\TarefaRepository' instanceof \CodeProject\Repositories\TarefaRepositoryEloquent,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -271,6 +275,8 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'CodeProject\Repositories\ClienteRepository' instanceof \CodeProject\Repositories\ClienteRepositoryEloquent,
+            'CodeProject\Repositories\ProjetoRepository' instanceof \CodeProject\Repositories\ProjetoRepositoryEloquent,
+            'CodeProject\Repositories\TarefaRepository' instanceof \CodeProject\Repositories\TarefaRepositoryEloquent,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
@@ -385,6 +391,8 @@ namespace PHPSTORM_META {
             'command.ide-helper.models' instanceof \Barryvdh\LaravelIdeHelper\Console\ModelsCommand,
             'command.ide-helper.meta' instanceof \Barryvdh\LaravelIdeHelper\Console\MetaCommand,
             'CodeProject\Repositories\ClienteRepository' instanceof \CodeProject\Repositories\ClienteRepositoryEloquent,
+            'CodeProject\Repositories\ProjetoRepository' instanceof \CodeProject\Repositories\ProjetoRepositoryEloquent,
+            'CodeProject\Repositories\TarefaRepository' instanceof \CodeProject\Repositories\TarefaRepositoryEloquent,
             'translation.loader' instanceof \Illuminate\Translation\FileLoader,
             'translator' instanceof \Illuminate\Translation\Translator,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
