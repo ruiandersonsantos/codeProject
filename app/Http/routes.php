@@ -21,20 +21,24 @@ Route::post('oauth/access_token',function (){
     return Response::json(Authorizer::issueAccessToken());
 });
 
-Route::get('/cliente','ClienteController@index');
-Route::post('/cliente','ClienteController@store');
-Route::get('/cliente/{id}','ClienteController@show');
-Route::delete('/cliente/{id}','ClienteController@destroy');
-Route::put('/cliente/{id}','ClienteController@update');
 
-Route::get('/projeto/{id}/tarefa','TarefasController@index');
-Route::post('/projeto/{id}/tarefa','TarefasController@store');
-Route::get('/projeto/{id}/tarefa/{tarefaId}','TarefasController@show');
-Route::put('/projeto/{id}/tarefa/{tarefaId}','TarefasController@update');
-Route::delete('/projeto/{id}/tarefa/{tarefaId}','TarefasController@destroy');
+Route::group(['middleware'=>'oauth'],function (){
 
-Route::get('/projeto','ProjetosController@index');
-Route::post('/projeto','ProjetosController@store');
-Route::get('/projeto/{id}','ProjetosController@show');
-Route::delete('/projeto/{id}','ProjetosController@destroy');
-Route::put('/projeto/{id}','ProjetosController@update');
+    Route::resource('cliente','ClienteController',['except'=>['create','edit']]);
+
+    Route::group(['middleware'=>'CheckDonoProjeto'], function (){
+        Route::resource('projeto','ProjetosController',['except'=>['create','edit']]);
+    });
+
+    Route::group(['prefix'=>'projeto'],function (){
+
+        Route::get('{id}/tarefa','TarefasController@index');
+        Route::post('{id}/tarefa','TarefasController@store');
+        Route::get('{id}/tarefa/{tarefaId}','TarefasController@show');
+        Route::put('{id}/tarefa/{tarefaId}','TarefasController@update');
+        Route::delete('{id}/tarefa/{tarefaId}','TarefasController@destroy');
+    });
+
+
+});
+

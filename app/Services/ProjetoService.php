@@ -29,7 +29,11 @@ class ProjetoService
     }
 
     public function all(){
-        return $this->repository->all();
+        // Pegando o id do usuario logado
+        $userId = \Authorizer::getResourceOwnerId();
+
+        // retornando projetos conforme o dono
+        return $this->repository->findWhere(['user_id'=>$userId]);
     }
 
     public function create(array $data){
@@ -47,9 +51,13 @@ class ProjetoService
 
     }
 
+    /**
+     * @param $id
+     * @return array|mixed
+     */
     public function show($id)
     {
-        return $this->repository->find($id);
+       return $this->repository->find($id);
     }
 
     public function update(array $request, $id)
@@ -70,7 +78,7 @@ class ProjetoService
     }
 
     public function destroy($id)
-    {
-        return $this->repository->find($id)->delete($id);
+    {   $this->repository->find($id)->delete($id);
+        return ['sucesso' => 'deletado'];
     }
 }
