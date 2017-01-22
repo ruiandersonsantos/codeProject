@@ -25,4 +25,7 @@ class Projeto extends Model implements Transformable
         return $this->hasMany(Tarefa::class);
     }
 
+    public function membros(){
+        return $this->belongsToMany(User::class,'membros');
+    }
 }

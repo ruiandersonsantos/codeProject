@@ -2,6 +2,7 @@
 
 namespace CodeProject\Repositories;
 
+use CodeProject\Presenters\ProjetoPresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeProject\Repositories\ProjetoRepository;
@@ -14,6 +15,11 @@ use CodeProject\Validators\ProjetoValidator;
  */
 class ProjetoRepositoryEloquent extends BaseRepository implements ProjetoRepository
 {
+    public function presenter()
+    {
+        return ProjetoPresenter::class;
+    }
+
     /**
      * Specify Model class name
      *
@@ -56,6 +62,24 @@ class ProjetoRepositoryEloquent extends BaseRepository implements ProjetoReposit
             return true;
         }
 
+        return false;
+    }
+
+    public function isMembro($projetoId, $membroId){
+
+        // Buscando Projeto pelo id envia no parametro
+        $listaProjetos = $this->find($projetoId);
+
+        // Buscando na lista os ususarios membros do projeto
+        foreach($listaProjetos->membros as $objt){
+            // se o id do usuario passado por parametro for membro do projeto entra aqui e libera o acesso
+           if($objt->id == $membroId){
+
+                return true;
+            }
+        }
+
+        // Se não encontrar nenhum nega o acesso
         return false;
     }
 }

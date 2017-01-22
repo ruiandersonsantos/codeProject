@@ -30,16 +30,28 @@ class CkeckDonoProjeto
         //pegando o id do projeto que vem pela requisição
         $projetoId = $request->projeto;
 
-        // Só é entra aqui quando tiver id como parametro
+        // Só é entra aqui quando tiver id como parametro na URL
+        // Esse trecho controla show, update e delete
         if(isset($projetoId))
         {
             // Verificando se o usuario é dono do projeto
-            if($this->repository->isOwner($projetoId, $userId) == false){
-                return ['error' => 'Acesso Negado.'];
+            if($this->repository->isOwner($projetoId, $userId) == true){
+                return $next($request);
             }
+
+            // Verificando se o usuario é membro do projeto
+            // Só poderá visualizar
+            if($this->repository->isMembro($projetoId,$userId) == true && $request->getMethod() == 'GET'){
+
+                return $next($request);
+
+            }
+        }elseif($request->getMethod() == 'GET'){
+            // Liberar todas as requisições GET sem parametro
+            return $next($request);
         }
 
 
-        return $next($request);
+        return ['error' => 'Acesso Negado.'];
     }
 }
