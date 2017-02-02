@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +7,8 @@
 	<title>Laravel</title>
 
 	@if(Config::get('app.debug'))
-		<link href="{{ asset('build/css/vendor/bootstrap.css') }}" rel="stylesheet"/>
-		<link href="{{ asset('build/css/vendor/bootstrap-theme.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('build/css/vendor/bootstrap.min.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('build/css/vendor/bootstrap-theme.min.css') }}" rel="stylesheet"/>
 	@else
 		<link href="{{ elixir('css/all.css') }}" rel="stylesheet"/>
 	@endif
@@ -63,7 +63,7 @@
 		</div>
 	</nav>
 
-	@yield('content')
+	<div ng-view=""></div>
 
 	<!-- Scripts -->
 	@if(Config::get('app.debug'))
@@ -75,6 +75,13 @@
 		<script src="{{ asset('build/js/vendor/angular-messages.min.js') }}"></script>
 		<script src="{{ asset('build/js/vendor/ui-bootstrap.js') }}"></script>
 		<script src="{{ asset('build/js/vendor/navbar.min.js') }}"></script>
+		<script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}"></script>
+		<script src="{{ asset('build/js/vendor/query-string.js') }}"></script>
+		<script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}"></script>
+
+		<script src="{{ asset('build/js/app.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/login.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/home.js') }}"></script>
 
 	@else
 		<script src="{{ elixir('js/all.js') }}"></script>
