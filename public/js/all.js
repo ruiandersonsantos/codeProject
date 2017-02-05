@@ -4944,11 +4944,28 @@ f+" > 4096 bytes)!");k.cookie=e}}c.module("ngCookies",["ng"]).provider("$cookies
 })();
 
 !function(e,t){"function"==typeof define&&define.amd?define(["angular","angular-cookies","query-string"],t):"object"==typeof exports?module.exports=t(require("angular"),require("angular-cookies"),require("query-string")):e.angularOAuth2=t(e.angular,"ngCookies",e.queryString)}(this,function(e,t,n){function r(e,t,n){return{request:function(e){return e.headers=e.headers||{},!e.headers.hasOwnProperty("Authorization")&&n.getAuthorizationHeader()&&(e.headers.Authorization=n.getAuthorizationHeader()),e},responseError:function(r){return 400!==r.status||!r.data||"invalid_request"!==r.data.error&&"invalid_grant"!==r.data.error||(n.removeToken(),t.$emit("oauth:error",r)),(401===r.status&&r.data&&"invalid_token"===r.data.error||r.headers("www-authenticate")&&0===r.headers("www-authenticate").indexOf("Bearer"))&&t.$emit("oauth:error",r),e.reject(r)}}}function o(e){e.interceptors.push("oauthInterceptor")}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(){var t=this,r=function(t){if(!(t instanceof Object))throw new TypeError("Invalid argument: `config` must be an `Object`.");var n=e.extend({},f,t);return e.forEach(h,function(e){if(!n[e])throw new Error("Missing parameter: "+e+".")}),"/"===n.baseUrl.substr(-1)&&(n.baseUrl=n.baseUrl.slice(0,-1)),"/"!==n.grantPath[0]&&(n.grantPath="/"+n.grantPath),"/"!==n.revokePath[0]&&(n.revokePath="/"+n.revokePath),n};this.configure=function(e){t.defaultConfig=r(e)},this.$get=function(t,o){var a=function(){function a(e){i(this,a),this.config=e}return s(a,[{key:"configure",value:function(e){this.config=r(e)}},{key:"isAuthenticated",value:function(){return!!o.getToken()}},{key:"getAccessToken",value:function(r,i){return r=e.extend({client_id:this.config.clientId,grant_type:"password"},r),null!==this.config.clientSecret&&(r.client_secret=this.config.clientSecret),r=n.stringify(r),i=e.extend({headers:{Authorization:void 0,"Content-Type":"application/x-www-form-urlencoded"}},i),t.post(""+this.config.baseUrl+this.config.grantPath,r,i).then(function(e){return o.setToken(e.data),e})}},{key:"getRefreshToken",value:function(r,i){return r=e.extend({client_id:this.config.clientId,grant_type:"refresh_token",refresh_token:o.getRefreshToken()},r),null!==this.config.clientSecret&&(r.client_secret=this.config.clientSecret),r=n.stringify(r),i=e.extend({headers:{Authorization:void 0,"Content-Type":"application/x-www-form-urlencoded"}},i),t.post(""+this.config.baseUrl+this.config.grantPath,r,i).then(function(e){return o.setToken(e.data),e})}},{key:"revokeToken",value:function(r,i){var a=o.getRefreshToken();return r=e.extend({client_id:this.config.clientId,token:a?a:o.getAccessToken(),token_type_hint:a?"refresh_token":"access_token"},r),null!==this.config.clientSecret&&(r.client_secret=this.config.clientSecret),r=n.stringify(r),i=e.extend({headers:{"Content-Type":"application/x-www-form-urlencoded"}},i),t.post(""+this.config.baseUrl+this.config.revokePath,r,i).then(function(e){return o.removeToken(),e})}}]),a}();return new a(this.defaultConfig)},this.$get.$inject=["$http","OAuthToken"]}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function u(){var t={name:"token",options:{secure:!0}};this.configure=function(n){if(!(n instanceof Object))throw new TypeError("Invalid argument: `config` must be an `Object`.");return e.extend(t,n),t},this.$get=function(e){var n=function(){function n(){i(this,n)}return s(n,[{key:"setToken",value:function(n){return e.putObject(t.name,n,t.options)}},{key:"getToken",value:function(){return e.getObject(t.name)}},{key:"getAccessToken",value:function(){return this.getToken()?this.getToken().access_token:void 0}},{key:"getAuthorizationHeader",value:function(){if(this.getTokenType()&&this.getAccessToken())return this.getTokenType().charAt(0).toUpperCase()+this.getTokenType().substr(1)+" "+this.getAccessToken()}},{key:"getRefreshToken",value:function(){return this.getToken()?this.getToken().refresh_token:void 0}},{key:"getTokenType",value:function(){return this.getToken()?this.getToken().token_type:void 0}},{key:"removeToken",value:function(){return e.remove(t.name,t.options)}}]),n}();return new n},this.$get.$inject=["$cookies"]}var c=e.module("angular-oauth2",[t]).config(o).factory("oauthInterceptor",r).provider("OAuth",a).provider("OAuthToken",u);r.$inject=["$q","$rootScope","OAuthToken"],o.$inject=["$httpProvider"];var s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}(),f={baseUrl:null,clientId:null,clientSecret:null,grantPath:"/oauth2/token",revokePath:"/oauth2/revoke"},h=["baseUrl","clientId","grantPath","revokePath"],s=function(){function e(e,t){for(var n=0;n<t.length;n++){var r=t[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}return function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}}();return c});
-var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers']);
+var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers', 'app.services']);
 
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
+angular.module('app.services',['ngResource']);
 
-app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProvider){
+app.provider('appConfig', function () {
+
+    var config = {
+        baseUrl: 'http://localhost:8000'
+    };
+
+    return {
+        config: config,
+        $get: function () {
+            return config;
+        }
+    }
+
+});
+
+app.config(['$routeProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider',
+    function($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider){
 
     $routeProvider
         .when('/login',{
@@ -4958,15 +4975,39 @@ app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProv
         .when('/home',{
             templateUrl: 'build/views/home.html',
             controller: 'HomeController'
-        });
+        })
+        .when('/clientes',{
+            templateUrl: 'build/views/client/list.html',
+            controller: 'ClientListController'
+        })
+        .when('/clientes/novo',{
+            templateUrl: 'build/views/client/new.html',
+            controller: 'ClientNewController'
+        })
+        .when('/clientes/:id/editar',{
+            templateUrl: 'build/views/client/edit.html',
+            controller: 'ClientEditController'
+        })
+        .when('/clientes/:id/remove',{
+            templateUrl: 'build/views/client/remove.html',
+            controller: 'ClientRemoveController'
+        });;
 
     OAuthProvider.configure({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: appConfigProvider.config.baseUrl,
         clientId: 'appid1',
         clientSecret: 'secret',
         grantPath: 'oauth/access_token'
 
     });
+
+    OAuthTokenProvider.configure({
+        name: 'token',
+        options:{
+            secure: false
+        }
+    });
+
 }]);
 
 app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
@@ -4997,12 +5038,101 @@ angular.module('app.controllers')
         password: ''
     };
 
+    $scope.error = {
+
+        message:'',
+        error: false
+    };
+
     $scope.login = function () {
-         OAuth.getAccessToken($scope.user).then(function () {
-            $location.path('home');
-        },function () {
-            alert('login invalido');
-        });
+
+        if($scope.form.$valid){
+
+            OAuth.getAccessToken($scope.user).then(function () {
+                $location.path('home');
+            },function (data) {
+                $scope.error.error = true;
+                $scope.error.message = data.data.error_description;
+            });
+        }
+
     }
 }]);
+angular.module('app.services')
+.service('Client',['$resource','appConfig',function ($resource, appConfig) {
+    return $resource(appConfig.baseUrl + '/cliente/:id',{id: '@id'},{
+        update: {
+            method: 'PUT'
+        }
+    });
+}]);
+angular.module('app.controllers')
+    .controller('ClientEditController',['$scope','$location','$routeParams','Client',
+        function ($scope,$location, $routeParams ,Client) {
+
+        $scope.cliente = Client.get({id: $routeParams.id});
+
+        $scope.atualizar = function () {
+
+            Client.update({id: $scope.cliente.id},$scope.cliente,function () {
+               $location.path('/clientes');
+               // console.log($scope.cliente);
+            });
+
+
+        };
+
+    }]);
+
+
+angular.module('app.controllers')
+    .controller('ClientListController',['$scope','Client',function ($scope, Client) {
+
+        $scope.clients = Client.query();
+
+    }]);
+
+angular.module('app.controllers')
+    .controller('ClientNewController',['$scope','$location','Client',function ($scope,$location ,Client) {
+
+        $scope.cliente = new Client();
+
+        $scope.save = function () {
+
+            if($scope.form.$valid){
+
+                if($scope.form.$valid){
+                    $scope.cliente.$save().then(function () {
+
+                        $location.path('/clientes');
+
+                    });
+                }
+
+
+
+            }
+
+
+        };
+
+    }]);
+
+
+angular.module('app.controllers')
+    .controller('ClientRemoveController',['$scope','$location','$routeParams','Client',
+        function ($scope,$location, $routeParams ,Client) {
+
+        $scope.cliente = Client.get({id: $routeParams.id});
+
+        $scope.remover = function () {
+            $scope.cliente.$delete().then(function () {
+                $location.path('/clientes');
+            });
+
+        };
+
+    }]);
+
+
 //# sourceMappingURL=all.js.map

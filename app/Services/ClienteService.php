@@ -74,6 +74,9 @@ class ClienteService
 
     public function destroy($id)
     {
-        return $this->repository->find($id)->delete($id);
+        if($this->repository->find($id)->delete($id)){
+            return ["cliente_excluido"];
+        }
+        return ["error"];
     }
 }

@@ -1,8 +1,25 @@
-var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers']);
+var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers', 'app.services']);
 
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
+angular.module('app.services',['ngResource']);
 
-app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProvider){
+app.provider('appConfig', function () {
+
+    var config = {
+        baseUrl: 'http://localhost:8000'
+    };
+
+    return {
+        config: config,
+        $get: function () {
+            return config;
+        }
+    }
+
+});
+
+app.config(['$routeProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider',
+    function($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider){
 
     $routeProvider
         .when('/login',{
@@ -12,15 +29,39 @@ app.config(['$routeProvider','OAuthProvider', function($routeProvider, OAuthProv
         .when('/home',{
             templateUrl: 'build/views/home.html',
             controller: 'HomeController'
-        });
+        })
+        .when('/clientes',{
+            templateUrl: 'build/views/client/list.html',
+            controller: 'ClientListController'
+        })
+        .when('/clientes/novo',{
+            templateUrl: 'build/views/client/new.html',
+            controller: 'ClientNewController'
+        })
+        .when('/clientes/:id/editar',{
+            templateUrl: 'build/views/client/edit.html',
+            controller: 'ClientEditController'
+        })
+        .when('/clientes/:id/remove',{
+            templateUrl: 'build/views/client/remove.html',
+            controller: 'ClientRemoveController'
+        });;
 
     OAuthProvider.configure({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: appConfigProvider.config.baseUrl,
         clientId: 'appid1',
         clientSecret: 'secret',
         grantPath: 'oauth/access_token'
 
     });
+
+    OAuthTokenProvider.configure({
+        name: 'token',
+        options:{
+            secure: false
+        }
+    });
+
 }]);
 
 app.run(['$rootScope', '$window', 'OAuth', function($rootScope, $window, OAuth) {
