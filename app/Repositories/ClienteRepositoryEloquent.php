@@ -10,8 +10,9 @@ namespace CodeProject\Repositories;
 
 
 use CodeProject\Entities\Cliente;
+use CodeProject\Presenters\ClientePresenter;
 use Prettus\Repository\Eloquent\BaseRepository;
-use Symfony\Component\HttpKernel\Client;
+
 
 class ClienteRepositoryEloquent extends BaseRepository implements ClienteRepository
 {
@@ -21,6 +22,10 @@ class ClienteRepositoryEloquent extends BaseRepository implements ClienteReposit
      *
      * @return string
      */
+    public function presenter()
+    {
+        return ClientePresenter::class;
+    }
     public function model()
     {
         // TODO: Implement model() method.

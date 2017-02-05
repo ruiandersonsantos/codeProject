@@ -18,8 +18,29 @@ app.provider('appConfig', function () {
 
 });
 
-app.config(['$routeProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider',
-    function($routeProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider){
+app.config(['$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider',
+    function($routeProvider,$httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider){
+
+    /* Esse provider intercepta todas as requisições e faz o tratamento para quando
+    * o JSON vier como string devido a modificação no present do Laravel*/
+    $httpProvider.defaults.transformResponse = function (data,headers) {
+
+            // Capturando cabeçalho da requisição para saber o content-type
+            var headerGetter = headers();
+
+            if(headerGetter['content-type'] == 'application/json' || headerGetter['content-type'] == 'text/json'){
+                // fazendo parse Jason
+                var dataJson = JSON.parse(data);
+
+                if(dataJson.hasOwnProperty('data')){
+                    dataJson = dataJson.data;
+                }
+                // retornando Json tratado
+                return dataJson;
+            }
+            // retornando requisição quando não for Json
+            return data;
+        };
 
     $routeProvider
         .when('/login',{
