@@ -1,0 +1,43 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Tarefas do Porjeto {{ projeto }}</div>
+                <div class="panel-body">
+
+                    <table class="table">
+
+                        <thead>
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Descrição</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat=" tarefa in tarefas">
+                                <td>{{ tarefa.titulo }}</td>
+                                <td>{{ tarefa.conteudo | limitTo: 80}}...</td>
+                                <td>
+                                    <a ng-href="#/projeto/{{ tarefa.projeto_id}}/tarefa/{{ tarefa.id }}/editar">
+                                        Editar
+                                    </a>
+                                    |
+                                    <a ng-href="#/projeto/{{ tarefa.projeto_id}}/tarefa/{{ tarefa.id }}/remove">
+                                        Excluir
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

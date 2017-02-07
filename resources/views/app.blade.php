@@ -87,13 +87,23 @@
 		<!-- CONTROLLERS !-->
 		<script src="{{ asset('build/js/controllers/login.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/home.js') }}"></script>
+
+		<!-- CONTROLLERS - Cliente !-->
 		<script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
 
+		<!-- CONTROLLERS - Tarefa !-->
+		<script src="{{ asset('build/js/controllers/tarefa/tarefaList.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/tarefa/tarefaShow.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/tarefa/tarefaNew.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/tarefa/tarefaEdit.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/tarefa/tarefaRemove.js') }}"></script>
+
 		<!-- SERVICES !-->
 		<script src="{{ asset('build/js/services/client.js') }}"></script>
+		<script src="{{ asset('build/js/services/tarefa.js') }}"></script>
 
 	@else
 		<script src="{{ elixir('js/all.js') }}"></script>
