@@ -72,8 +72,8 @@ app.config(['$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider
             templateUrl: 'build/views/tarefa/list.html',
             controller: 'TarefaListController'
         })
-        .when('/projeto/:id/tarefa/:idTarefa',{
-            templateUrl: 'build/views/tarefa/tarefa.html',
+        .when('/projeto/:id/tarefa/:idTarefa/show',{
+            templateUrl: 'build/views/tarefa/show.html',
             controller: 'TarefaShowController'
         })
         .when('/projeto/:id/tarefa/novo',{
@@ -87,11 +87,8 @@ app.config(['$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider
         .when('/projeto/:id/tarefa/:idTarefa/remove',{
             templateUrl: 'build/views/tarefa/remove.html',
             controller: 'TarefaRemoveController'
-        })
-        .when('/clientes/:id/remove',{
-            templateUrl: 'build/views/tarefa/remove.html',
-            controller: 'TarefaRemoveController'
         });
+
 
     OAuthProvider.configure({
         baseUrl: appConfigProvider.config.baseUrl,

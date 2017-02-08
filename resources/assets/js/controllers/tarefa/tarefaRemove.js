@@ -1,12 +1,15 @@
 angular.module('app.controllers')
-    .controller('TarefaRemoveController',['$scope','$location','$routeParams','Client',
-        function ($scope,$location, $routeParams ,Client) {
+    .controller('TarefaRemoveController',['$scope','$location','$routeParams','Tarefa',
+        function ($scope,$location, $routeParams ,Tarefa) {
 
-        $scope.cliente = Client.get({id: $routeParams.id});
+            $scope.tarefa = Tarefa.get({
+                id: $routeParams.id,
+                idTarefa: $routeParams.idTarefa
+            });
 
         $scope.remover = function () {
-            $scope.cliente.$delete().then(function () {
-                $location.path('/clientes');
+            $scope.tarefa.$delete({id: null, idTarefa: $scope.tarefa.id}).then(function () {
+               $location.path('/projeto/'+$routeParams.id+'/tarefas');
             });
 
         };

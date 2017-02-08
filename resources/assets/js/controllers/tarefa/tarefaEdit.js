@@ -1,14 +1,19 @@
 angular.module('app.controllers')
-    .controller('TarefaEditController',['$scope','$location','$routeParams','Client',
-        function ($scope,$location, $routeParams ,Client) {
+    .controller('TarefaEditController',['$scope','$location','$routeParams','Tarefa',
+        function ($scope,$location, $routeParams ,Tarefa) {
 
-        $scope.cliente = Client.get({id: $routeParams.id});
+        $scope.tarefa = Tarefa.get({
+            id: $routeParams.id,
+            idTarefa: $routeParams.idTarefa
+        });
+
+
 
         $scope.atualizar = function () {
 
-            Client.update({id: $scope.cliente.id},$scope.cliente,function () {
-               $location.path('/clientes');
-               // console.log($scope.cliente);
+            Tarefa.update({idTarefa: $scope.tarefa.id} ,$scope.tarefa, function () {
+               $location.path('/projeto/'+$routeParams.id+'/tarefas');
+
             });
 
 

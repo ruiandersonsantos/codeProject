@@ -52,7 +52,7 @@ class TarefaService
         return $this->repository->findWhere(['projeto_id' =>$id, 'id'=>$tarefaId]);
     }
 
-    public function update(array $request, $id, $tarefaId)
+    public function update(array $request, $tarefaId)
     {
         try{
 
@@ -69,8 +69,11 @@ class TarefaService
 
     }
 
-    public function destroy($id, $tarefaId)
+    public function destroy($tarefaId)
     {
-        return $this->repository->find($id)->delete($tarefaId);
+        if($this->repository->delete($tarefaId)){
+            return "deletado";
+        }
+        return  "error";
     }
 }

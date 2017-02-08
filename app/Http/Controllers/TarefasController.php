@@ -35,9 +35,9 @@ class TarefasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        return $this->tarefaService->create($request->all());
+        return $this->tarefaService->store($request->all());
     }
 
     /**
@@ -59,9 +59,9 @@ class TarefasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $tarefaId)
+    public function update(Request $request, $tarefaId)
     {
-        return $this->tarefaService->update($request->all(),$id,$tarefaId);
+        return $this->tarefaService->update($request->all(),$tarefaId);
     }
 
     /**
@@ -70,8 +70,8 @@ class TarefasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $tarefaId)
+    public function destroy( $tarefaId)
     {
-        return $this->tarefaService->destroy($id,$tarefaId);
+        return $this->tarefaService->destroy($tarefaId);
     }
 }
