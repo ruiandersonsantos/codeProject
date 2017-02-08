@@ -7,8 +7,9 @@ angular.module('app.controllers')
                 idTarefa: $routeParams.idTarefa
             });
 
+
         $scope.remover = function () {
-            $scope.tarefa.$delete({id: null, idTarefa: $scope.tarefa.id}).then(function () {
+            $scope.tarefa.$delete({id: $scope.tarefa.projeto_id, idTarefa: $scope.tarefa.id}).then(function () {
                $location.path('/projeto/'+$routeParams.id+'/tarefas');
             });
 

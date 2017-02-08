@@ -70,8 +70,8 @@ class TarefasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $tarefaId)
+    public function destroy($id, $IdTarefa)
     {
-        return $this->tarefaService->destroy($tarefaId);
+        return $this->tarefaService->destroy($id,$IdTarefa);
     }
 }

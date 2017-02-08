@@ -69,9 +69,9 @@ class TarefaService
 
     }
 
-    public function destroy($tarefaId)
+    public function destroy($id,$IdTarefa)
     {
-        if($this->repository->delete($tarefaId)){
+        if($this->repository->find($IdTarefa)->delete($IdTarefa)){
             return "deletado";
         }
         return  "error";

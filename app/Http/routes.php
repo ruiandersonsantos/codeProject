@@ -37,7 +37,7 @@ Route::group(['middleware'=>'oauth'],function (){
         Route::put('{tarefa/{idTarefa}','TarefasController@update');
         Route::get('{id}/tarefa/{tarefaId}','TarefasController@show');
         Route::put('{id}/tarefa/{tarefaId}','TarefasController@update');
-        Route::delete('tarefa/{tarefaId}','TarefasController@destroy');
+        Route::delete('{id}/tarefa/{idTarefa}','TarefasController@destroy');
     });
 
 

@@ -7,7 +7,7 @@ angular.module('app.controllers')
             idTarefa: $routeParams.idTarefa
         });
 
-
+        console.log($routeParams);
 
         $scope.atualizar = function () {
 
