@@ -49,7 +49,24 @@ class TarefaService
 
     public function show($id,$tarefaId)
     {
-        return $this->repository->findWhere(['projeto_id' =>$id, 'id'=>$tarefaId]);
+        // Buscanco tarefas no banco de dados
+        $resultado =  $this->repository->findWhere(['projeto_id' =>$id, 'id'=>$tarefaId]);
+
+         //tratando array para retornar objeto
+        if(isset($resultado['data']) && count($resultado['data']) == 1){
+            $resultado = [
+                'data' => $resultado['data'][0]
+            ];
+        }
+
+        // tratando array para retornar objeto
+        if(!isset($resultado['data'])){
+            $resultado = [
+                'data' => $resultado[0]
+            ];
+        }
+
+        return $resultado;
     }
 
     public function update(array $request, $tarefaId)

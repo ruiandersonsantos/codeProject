@@ -6,30 +6,9 @@ angular.module('app.services')
     },{
         update: {
             method: 'PUT'
-        },
-        get:{
-            method:'GET',
-            transformResponse: function (data,headers) {
-
-                // Capturando cabeçalho da requisição para saber o content-type
-                var headerGetter = headers();
-
-                if(headerGetter['content-type'] == 'application/json' || headerGetter['content-type'] == 'text/json'){
-                    // fazendo parse Jason
-                    var dataJson = JSON.parse(data);
-
-                    if(dataJson.hasOwnProperty('data')){
-                        dataJson = dataJson.data;
-                    }
-                    // retornando Json tratado
-                    return dataJson[0];
-                }
-                // retornando requisição quando não for Json
-                return data;
-            }
-
-
         }
+
+
     });
 }]);
 

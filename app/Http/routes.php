@@ -40,6 +40,6 @@ Route::group(['middleware'=>'oauth'],function (){
         Route::delete('{id}/tarefa/{idTarefa}','TarefasController@destroy');
     });
 
-
+    Route::get('user/authenticated','UserController@authenticated');
 });
 
