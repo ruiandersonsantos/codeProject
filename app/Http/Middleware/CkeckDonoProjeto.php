@@ -51,6 +51,10 @@ class CkeckDonoProjeto
             return $next($request);
         }
 
+        if($request->getMethod() == 'POST'){
+            return $next($request);
+        }
+
 
         return ['error' => 'Acesso Negado.'];
     }

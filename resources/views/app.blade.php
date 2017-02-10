@@ -94,6 +94,13 @@
 		<script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
 
+		<!-- CONTROLLERS - projeto !-->
+		<script src="{{ asset('build/js/controllers/projeto/projetoList.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/projeto/projetoNew.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/projeto/projetoEdit.js') }}"></script>
+		<script src="{{ asset('build/js/controllers/projeto/projetoRemove.js') }}"></script>
+
+
 		<!-- CONTROLLERS - Tarefa !-->
 		<script src="{{ asset('build/js/controllers/tarefa/tarefaList.js') }}"></script>
 		<script src="{{ asset('build/js/controllers/tarefa/tarefaShow.js') }}"></script>
@@ -103,8 +110,13 @@
 
 		<!-- SERVICES !-->
 		<script src="{{ asset('build/js/services/client.js') }}"></script>
+		<script src="{{ asset('build/js/services/projeto.js') }}"></script>
 		<script src="{{ asset('build/js/services/tarefa.js') }}"></script>
 		<script src="{{ asset('build/js/services/user.js') }}"></script>
+
+
+		<!-- Filters !-->
+		<script src="{{ asset('build/js/filters/date-br.js') }}"></script>
 
 	@else
 		<script src="{{ elixir('js/all.js') }}"></script>

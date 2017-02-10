@@ -1,0 +1,56 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Liatagem de Projetos</div>
+                <div class="panel-body">
+
+
+                    <table class="table">
+
+                        <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nome</th>
+                            <th>Cliente</th>
+                            <th>Progresso</th>
+                            <th>Status</th>
+                            <th>Início</th>
+                            <th>Término</th>
+                            <th>Ações</th>
+
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat=" projeto in projetos">
+                                <td>{{ projeto.id }}</td>
+                                <td>{{ projeto.nome }}</td>
+                                <td>{{ projeto.cliente.nome }}</td>
+                                <td>{{ projeto.progresso }}</td>
+                                <td>{{ projeto.status }}</td>
+                                <td>{{ projeto.inicio | dateBr }}</td>
+                                <td>{{ projeto.termino | dateBr }}</td>
+
+                                <td>
+                                    <a ng-href="#/projeto/{{ projeto.id }}/editar">
+                                        Editar
+                                    </a>
+                                    |
+                                    <a ng-href="#/projeto/{{ projeto.id }}/remove">
+                                        Excluir
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

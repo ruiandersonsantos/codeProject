@@ -15,23 +15,30 @@ class ProjetoTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = ['membros'];
 
+
     public function transform(Projeto $projeto){
 
         return [
-            'codigo_projeto' => $projeto->id,
-            'cliente_id' => $projeto->cliente_id,
+            'id' => $projeto->id,
+            'cliente' => $projeto->cliente,
             'user_id' => $projeto->user_id,
             'membros' => $projeto->membros,
-            'projeto' => $projeto->nome,
+            'nome' => $projeto->nome,
             'descricao' => $projeto->descricao,
             'progresso' => $projeto->progresso,
             'status' => $projeto->status,
-            'data_inicio' => $projeto->inicio
+            'inicio' => $projeto->inicio,
+            'termino' => $projeto->termino
         ];
     }
 
     public function includeMembros(Projeto $projeto)
     {
         return $this->collection($projeto->membros, new ProjetoMembrosTransformer());
+    }
+
+    public function includeCliente(Projeto $projeto)
+    {
+        return $this->collection($projeto->cliente, new ClienteTransformer());
     }
 }

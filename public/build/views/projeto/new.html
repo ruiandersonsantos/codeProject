@@ -1,0 +1,105 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Cadastros de  Projeto</div>
+                <div class="panel-body">
+
+                    <form name="form" class="form-horizontal" role="form" method="POST" ng-submit="save()">
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.nome.$valid && form.nome.$touched}">
+                            <label class="col-md-4 control-label">Nome</label>
+                            <div class="col-md-6">
+                                <input type="text" ng-model="projeto.nome" class="form-control" name="nome" required>
+                                <div ng-messages="form.nome.$error" class="help-block" ng-show="form.nome.$touched">
+                                    <div ng-message="required">O campo nome é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.descricao.$valid && form.descricao.$touched}">
+                            <label class="col-md-4 control-label">Descrição</label>
+                            <div class="col-md-6">
+                                <textarea cols="5" rows="6" ng-model="projeto.descricao" class="form-control" name="descricao" required />
+
+                            </div>
+                            <div ng-messages="form.descricao.$error" class="help-block" ng-show="form.descricao.$touched">
+                                <div ng-message="required">O campo descrição é obrigátorio.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.cliente_id.$valid && form.cliente_id.$touched}">
+                            <label class="col-md-4 control-label">Cliente</label>
+                            <div class="col-md-6">
+                               <select name="cliente_id" class="form-control" required ng-model="projeto.cliente_id"
+                                       ng-options="cli.id as cli.nome for cli in clientes">
+                                   <option value=""><-- selecione um cliente --></option>
+
+                               </select>
+                                <div ng-messages="form.cliente_id.$error" class="help-block" ng-show="form.cliente_id.$touched">
+                                    <div ng-message="required">O campo cliente é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.inicio.$valid && form.inicio.$touched}">
+                            <label class="col-md-4 control-label">Data de Ínicio</label>
+                            <div class="col-md-6">
+                                <input type="date" ng-model="projeto.inicio" class="form-control" name="inicio" required>
+                                <div ng-messages="form.inicio.$error" class="help-block" ng-show="form.inicio.$touched">
+                                    <div ng-message="required">O campo date de inicio é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.termino.$valid && form.termino.$touched}">
+                            <label class="col-md-4 control-label">Previsão de Término</label>
+                            <div class="col-md-6">
+                                <input type="date" ng-model="projeto.termino" class="form-control" name="termino" required>
+                                <div ng-messages="form.termino.$error" class="help-block" ng-show="form.termino.$touched">
+                                    <div ng-message="required">O campo date de termino é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.progresso.$valid && form.progresso.$touched}">
+                            <label class="col-md-4 control-label">Progresso</label>
+                            <div class="col-md-6">
+                                <input type="text" ng-model="projeto.progresso" class="form-control" name="progresso" required>
+                                <div ng-messages="form.progresso.$error" class="help-block" ng-show="form.progresso.$touched">
+                                    <div ng-message="required">O campo progresso é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{ 'has-error' : !form.status.$valid && form.status.$touched}">
+                            <label class="col-md-4 control-label">Status</label>
+                            <div class="col-md-6">
+                                <select name="status" class="form-control" required ng-model="projeto.status"
+                                        ng-options="st.value as st.label for st in status">
+                                    <option value=""><-- selecione um status --></option>
+
+                                </select>
+                                <div ng-messages="form.cliente_id.$error" class="help-block" ng-show="form.cliente_id.$touched">
+                                    <div ng-message="required">O campo atatus é obrigátorio.</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
