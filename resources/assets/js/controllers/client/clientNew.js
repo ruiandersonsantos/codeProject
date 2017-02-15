@@ -5,19 +5,18 @@ angular.module('app.controllers')
 
         $scope.save = function () {
 
+
+
             if($scope.form.$valid){
+                $scope.cliente.$save().then(function () {
 
-                if($scope.form.$valid){
-                    $scope.cliente.$save().then(function () {
+                    $location.path('/clientes');
 
-                        $location.path('/clientes');
-
-                    });
-                }
-
-
-
+                });
             }
+
+
+
 
 
         };

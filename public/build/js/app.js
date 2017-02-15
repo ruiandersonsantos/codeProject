@@ -1,10 +1,13 @@
-var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers', 'app.services','app.filter']);
+var app = angular.module('app',[
+    'ngRoute','angular-oauth2','app.controllers', 'app.services','app.filter','ui.bootstrap.datepicker','ui.bootstrap.typeahead','ui.bootstrap.tpls'
+]);
 
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
 angular.module('app.filter',[]);
 angular.module('app.services',['ngResource']);
 
-app.provider('appConfig', function () {
+
+app.provider('appConfig', ['$httpParamSerializerProvider',function ($httpParamSerializerProvider) {
 
     var config = {
         baseUrl: 'http://localhost:8000',
@@ -12,8 +15,37 @@ app.provider('appConfig', function () {
             status:[
                 {value: 1, label: 'Não Iniciado'},
                 {value: 2, label: 'Iniciado'},
-                {value: 3, label: 'Concluido'}
+                {value: 3, label: 'Concluido'},
+                {value: 4, label: 'Suspenso'}
             ]
+        },
+        utils:{
+            transformeRequest: function (data) {
+                if(angular.isObject(data)){
+                    // tratando serialização das requisições de forma global
+                    return $httpParamSerializerProvider.$get()(data);
+                }
+
+                return data;
+            },
+            transformResponse: function (data,headers) {
+
+                // Capturando cabeçalho da requisição para saber o content-type
+                var headerGetter = headers();
+
+                if(headerGetter['content-type'] == 'application/json' || headerGetter['content-type'] == 'text/json'){
+                    // fazendo parse Jason
+                    var dataJson = JSON.parse(data);
+
+                    if(dataJson.hasOwnProperty('data')){
+                        dataJson = dataJson.data;
+                    }
+                    // retornando Json tratado
+                    return dataJson;
+                }
+                // retornando requisição quando não for Json
+                return data;
+            }
         }
     };
 
@@ -24,31 +56,20 @@ app.provider('appConfig', function () {
         }
     }
 
-});
+}]);
 
 app.config(['$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider','appConfigProvider',
     function($routeProvider,$httpProvider, OAuthProvider, OAuthTokenProvider, appConfigProvider){
 
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
+
+    $httpProvider.defaults.transformRequest = appConfigProvider.config.utils.transformeRequest;
+
     /* Esse provider intercepta todas as requisições e faz o tratamento para quando
     * o JSON vier como string devido a modificação no present do Laravel*/
-    $httpProvider.defaults.transformResponse = function (data,headers) {
-
-            // Capturando cabeçalho da requisição para saber o content-type
-            var headerGetter = headers();
-
-            if(headerGetter['content-type'] == 'application/json' || headerGetter['content-type'] == 'text/json'){
-                // fazendo parse Jason
-                var dataJson = JSON.parse(data);
-
-                if(dataJson.hasOwnProperty('data')){
-                    dataJson = dataJson.data;
-                }
-                // retornando Json tratado
-                return dataJson;
-            }
-            // retornando requisição quando não for Json
-            return data;
-        };
+    $httpProvider.defaults.transformResponse = appConfigProvider.config.utils.transformResponse;
 
     $routeProvider
         .when('/login',{
@@ -84,13 +105,13 @@ app.config(['$routeProvider','$httpProvider','OAuthProvider','OAuthTokenProvider
             templateUrl: 'build/views/projeto/new.html',
             controller: 'ProjetoNewController'
         })
-        .when('/projeto/editar',{
+        .when('/projeto/:id/editar',{
             templateUrl: 'build/views/projeto/edit.html',
-            controller: 'projetoEditController'
+            controller: 'ProjetoEditController'
         })
         .when('/projeto/:id/remove',{
             templateUrl: 'build/views/projeto/remove.html',
-            controller: 'projetoRemoveController'
+            controller: 'ProjetoRemoveController'
         })
 
 

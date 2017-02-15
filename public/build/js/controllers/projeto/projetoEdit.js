@@ -1,23 +1,68 @@
 angular.module('app.controllers')
-    .controller('TarefaEditController',['$scope','$location','$routeParams','Tarefa',
-        function ($scope,$location, $routeParams ,Tarefa) {
+    .controller('ProjetoEditController',['$scope','$location','$routeParams','Projeto','Client','appConfig','$cookies',
+        function ($scope,$location,$routeParams ,Projeto,Client,appConfig,$cookies) {
 
-        $scope.tarefa = Tarefa.get({
-            id: $routeParams.id,
-            idTarefa: $routeParams.idTarefa
-        });
+            Projeto.get({id: $routeParams.id},function (data) {
 
-        console.log($routeParams);
+                $scope.projeto = data;
 
-        $scope.atualizar = function () {
-
-            Tarefa.update({idTarefa: $scope.tarefa.id} ,$scope.tarefa, function () {
-               $location.path('/projeto/'+$routeParams.id+'/tarefas');
+                $scope.clienteSelecionado = data.cliente;
 
             });
+           // $scope.clientes = Client.query();
+            $scope.status = appConfig.projeto.status;
+
+            $scope.dt_inicio = false;
+
+            $scope.openInicio = function ($event) {
+                $scope.dt_inicio = true;
+            };
+
+            $scope.dt_termino = false;
+
+            $scope.openTermino = function ($event) {
+                $scope.dt_termino = true;
+            };
 
 
-        };
+            $scope.save = function () {
 
-    }]);
+                if($scope.form.$valid){
 
+                    $scope.projeto.user_id = $cookies.getObject('user').id;
+                    $scope.projeto.cliente_id = $scope.projeto.cliente.id;
+
+                     Projeto.update($scope.projeto.id,$scope.projeto,function () {
+                         $location.path('/projetos');
+                     });
+
+
+                }
+
+            };
+
+            $scope.formatName = function(model){
+
+                if(model){
+                    return model.nome;
+                }
+
+                return '';
+            };
+
+            $scope.getClientes = function (nome) {
+                return Client.query({
+                    search:nome,
+                    searchFields:'nome:like'
+                }).$promise;
+            }
+
+
+            $scope.selectCliente = function (item) {
+
+                $scope.projeto.cliente = item;
+
+            }
+
+
+        }]);

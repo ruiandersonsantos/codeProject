@@ -25,7 +25,7 @@ class ProjetoTransformer extends TransformerAbstract
             'membros' => $projeto->membros,
             'nome' => $projeto->nome,
             'descricao' => $projeto->descricao,
-            'progresso' => $projeto->progresso,
+            'progresso' => (int) $projeto->progresso,
             'status' => $projeto->status,
             'inicio' => $projeto->inicio,
             'termino' => $projeto->termino

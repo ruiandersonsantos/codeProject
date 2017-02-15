@@ -2,12 +2,15 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Exclusão de Tarefa do projeto</div>
+                <div class="panel-heading">Exclusão de projeto</div>
                 <div class="panel-body">
-                    <p>Deseja realmente excluir esta tarefa ?</p>
+                    <p>Deseja realmente excluir este projeto ?</p>
                         <ul>
-                            <li><strong>Titulo:</strong>{{ tarefa.titulo }}</li>
-                            <li><strong>Conteudo:</strong>{{ tarefa.conteudo }}</li>
+                            <li><strong>Nome:</strong>{{ projeto.nome }}</li>
+                            <li><strong>Inicio:</strong>{{ projeto.inicio | date:'dd-MM-yyyy' }}</li>
+                            <li><strong>Termino:</strong>{{ projeto.termino | date:'dd-MM-yyyy' }}</li>
+                            <li><strong>Cliente:</strong>{{ projeto.cliente.nome }}</li>
+                            <li><strong>Descrição:</strong>{{ projeto.descricao}}</li>
 
                         </ul>
 

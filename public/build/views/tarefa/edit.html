@@ -21,7 +21,10 @@
                         <div class="form-group" ng-class="{ 'has-error' : !form.conteudo.$valid && form.conteudo.$touched}">
                             <label class="col-md-4 control-label">Conteúdo</label>
                             <div class="col-md-6">
-                                <textarea cols="5" rows="6" ng-model="tarefa.conteudo" class="form-control" name="conteudo" />
+                                <textarea cols="5" rows="6" ng-model="tarefa.conteudo" class="form-control" name="conteudo" required/>
+                                <div ng-messages="form.conteudo.$error" class="help-block" ng-show="form.conteudo.$touched">
+                                    <div ng-message="required">O campo é obrigátorio.</div>
+                                </div>
                             </div>
                         </div>
 

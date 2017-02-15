@@ -78,7 +78,7 @@ class ProjetoService
     }
 
     public function destroy($id)
-    {   $this->repository->find($id)->delete($id);
+    {   $this->repository->delete($id);
         return ['sucesso' => 'deletado'];
     }
 }
